@@ -20,7 +20,7 @@ structured in the following way:
 - `api`: This directory contains the backend in `Nest.js`, the source for `transformer` binary
   and the required migration files.
 - `infra`: This directory contains the K8s YAML files for deployment on K8s.
-- `ol-fyi-local-infra`: This directory contains files for setting up the databased locally using docker-compose.
+- `ol-fyi-local-infra`: This directory contains files for setting up the database locally using docker-compose.
 - `web-app`: This directory contains the client-side code for the 0L Explorer app.
 
 
@@ -34,9 +34,8 @@ Prerequisites
 Before you begin, ensure you have the following installed on your system:
 
 1. Docker: [Install Docker](https://docs.docker.com/get-docker/)
-2. Docker Compose: [Install Docker Compose](https://docs.docker.com/compose/install/)
-3. Node.js and npm: [Install Node.js](https://nodejs.org/en/download/)
-4. Rust and Cargo: [Install Rust](https://www.rust-lang.org/tools/install)
+2. Node.js and npm: [Install Node.js](https://nodejs.org/en/download/)
+3. Rust and Cargo: [Install Rust](https://www.rust-lang.org/tools/install)
 
 Once you are set, follow the steps:
 
@@ -45,14 +44,14 @@ Once you are set, follow the steps:
 - Navigate to the `ol-fyi-local-infra` directory.
 
    ```bash
-   $ cd /explorer/ol-fyi-local-infra
+   cd ./ol-fyi-local-infra
    ```
 
 
 - Once you are in the `ol-fyi-local-infra` directory, run:
 
    ```bash
-  $  docker compose up -d
+     docker compose up -d
    ```
 
 This brings all the databases up:
@@ -65,7 +64,7 @@ This brings all the databases up:
 Check the status using:
 
 ```bash
-$ docker ps
+   docker ps
 ```
 
 Running Clickhouse Migrations
@@ -75,13 +74,13 @@ Once the Clickhouse database is up and running,
 you can connect to it using:
 
 ```bash 
-$ docker exec -it ol-fyi-local-infra_clickhouse_1 bash
+  docker exec -it ol-fyi-local-infra_clickhouse_1 bash
 ```
 
 Once, inside the container's shell, execute:
 
 ```bash
-$ clickhouse client -h "127.0.0.1" --port 9000 -u "olfyi" --password "olfyi" -d "olfyi" -n
+  clickhouse client -h "127.0.0.1" --port 9000 -u "olfyi" --password "olfyi" -d "olfyi" -n
 ```
 
 After connecting to the clickhouse client, execute the queries to
@@ -93,25 +92,25 @@ Building the Transformer Binary
 Navigate to the transformer directory and build the project:
 
 ```bash 
-$ cd explorer/api/transformer
+  cd explorer/api/transformer
 ```
 
 Build the binary:
 
 ```bash 
-$ cargo build
+  cargo build
 ```
 
 Copy the binary to /usr/local/bin:
 
 ```bash 
-$ sudo cp /target/debug/build/transformer /usr/local/bin/
+  sudo cp /target/debug/build/transformer /usr/local/bin/
 ```
 
 Make the binary executable:
 
 ```bash 
-$ sudo chmod +x /usr/local/bin/transformer
+  sudo chmod +x /usr/local/bin/transformer
 ```
 
 Run the backend
@@ -120,7 +119,7 @@ Run the backend
 Navigate to `api` directory.
 
 ```bash
-$ cd api
+  cd api
 ```
 
 ## PostgreSQL
@@ -137,13 +136,13 @@ We use (Primsa)[https://www.prisma.io/].
 First, install the project dependencies:
 
 ```bash
-$ npm install
+  npm install
 ```
 
 Don't forget to configure the `.env` on your machine
 
 ```bash
-$ cp .env.example .env
+  cp .env.example .env
 ```
 
 ## Running the app
@@ -152,34 +151,18 @@ To run your Nest application, use the following commands:
 
 ```bash
 # development
-$ npm run start
+  npm run start
 
 # watch mode
-$ npm run start:dev
+  npm run start:dev
 
 # production mode
-$ npm run start:prod
+  npm run start:prod
 ```
 
-## Test
 
-Execute the unit and e2e tests to ensure your application is running correctly:
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
-This will run the backend as shown:
-
-
-![Backend Running](./assets/images/backend-running.png)
 
 Run the client:
 ----------------
@@ -187,22 +170,17 @@ Run the client:
 Once the backend is running, run the client,
 
 ```bash
-$ cd web-app
+  cd web-app
 ```
 
 First, install the project dependencies:
 
 ```bash
-$ npm install
+  npm install
 ```
 
 And run it with:
 
 ```bash
-$ npm run dev
+  npm run dev
 ```
-
-This will run the client as shown:
-
-
-![Client Running](./assets/images/client-running.png)
